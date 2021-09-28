@@ -16,16 +16,26 @@ function switchPosition(e) {
     : localStorage.setItem('theme', LIGHT);
 
   /* -------------- Меняем цвет темы при нажатии на переключатель ------------- */
-  if (switchValue === true) {
-    localStorage.setItem('theme', DARK);
-    document.querySelector('body').classList.add(DARK);
-    document.querySelector('body').classList.remove(LIGHT);
+  /* ----------------------- убрал лишний код (=== true)----------------------- */
+  if (switchValue) {
+    changeThemeToBlack();
   } else {
-    localStorage.setItem('theme', LIGHT);
-    document.querySelector('body').classList.add(LIGHT);
-    document.querySelector('body').classList.remove(DARK);
+    changeThemeToWhite();
   }
 }
+
+/* ------------------- вынес параметры в отдельный функции ------------------ */
+const changeThemeToBlack = function () {
+  localStorage.setItem('theme', DARK);
+  document.querySelector('body').classList.add(DARK);
+  document.querySelector('body').classList.remove(LIGHT);
+};
+
+const changeThemeToWhite = function () {
+  localStorage.setItem('theme', LIGHT);
+  document.querySelector('body').classList.add(LIGHT);
+  document.querySelector('body').classList.remove(DARK);
+};
 
 /* ----------------- Сохраняем тему при обновлении страницы ----------------- */
 let saveSwitchPosition = localStorage.getItem('theme');
@@ -35,4 +45,6 @@ if (!saveSwitchPosition) {
   localStorage.setItem('theme', saveSwitchPosition);
 }
 document.querySelector('body').classList.add(saveSwitchPosition);
-refs.switchBtn.checked = saveSwitchPosition === LIGHT ? false : true;
+
+/* ------------- убрал (? false : true;) / LIGHT заменил на DARK ------------ */
+refs.switchBtn.checked = saveSwitchPosition === DARK;
